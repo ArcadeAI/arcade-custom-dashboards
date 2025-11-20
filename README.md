@@ -59,8 +59,8 @@ That's it!
 ✅ **White-labelable** - Per-dashboard branding (company name, colors, taglines)  
 ✅ **Prompt Package** - AI customization templates with full context (`/prompts` folder)  
 ✅ **One-Command Deploy** - Docker with health checks  
-✅ **Self-hosted Support** - Configure for Arcade Cloud or your own instance  
-✅ **Production-Ready** - Clean code, proper error handling, TypeScript  
+✅ **Arcade Cloud or On-Prem** - Works with Arcade Cloud or your own on-premise Arcade engine  
+✅ **Forward-Deployed Engineer Support** - Available from Arcade for deep customization  
 
 ---
 
