@@ -1,0 +1,50 @@
+{
+  "name": "arcade-composable-dashboard",
+  "version": "1.0.0",
+  "description": "Composable, white-labelable tool management platform - build it your way",
+  "author": "Arcade AI, Inc.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arcade-ai/arcade-dashboard.git"
+  },
+  "keywords": [
+    "arcade",
+    "white-label",
+    "dashboard",
+    "tools",
+    "mcp",
+    "ai",
+    "chat",
+    "customizable"
+  ],
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "docker:build": "docker build -t arcade-dashboard .",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker logs -f arcade-dashboard"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.554.0",
+    "next": "16.0.3",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "tailwind-merge": "^3.4.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.0.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

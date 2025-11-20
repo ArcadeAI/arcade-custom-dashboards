@@ -1,0 +1,69 @@
+services:
+  arcade-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: arcade-dashboard
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      # Arcade API Configuration (REQUIRED)
+      - ARCADE_API_KEY=${ARCADE_API_KEY:?ARCADE_API_KEY is required}
+      - ARCADE_API_BASE_URL=${ARCADE_API_BASE_URL:-https://api.arcade.dev}
+      
+      # White-label Branding (defaults to GameForge Studios demo)
+      - NEXT_PUBLIC_COMPANY_NAME=${NEXT_PUBLIC_COMPANY_NAME:-GameForge Studios}
+      - NEXT_PUBLIC_COMPANY_TAGLINE=${NEXT_PUBLIC_COMPANY_TAGLINE:-Composable Dashboards Powered by Arcade - Expose secure, actionable tools to your customers and agents}
+      - NEXT_PUBLIC_COMPANY_URL=${NEXT_PUBLIC_COMPANY_URL:-https://gameforge.studio}
+      - NEXT_PUBLIC_PRIMARY_COLOR=${NEXT_PUBLIC_PRIMARY_COLOR:-#8b5cf6}
+      - NEXT_PUBLIC_SECONDARY_COLOR=${NEXT_PUBLIC_SECONDARY_COLOR:-#f97316}
+      - NEXT_PUBLIC_FONT_FAMILY=${NEXT_PUBLIC_FONT_FAMILY:-Inter}
+      
+      # Custom Domain (optional)
+      - NEXT_PUBLIC_CUSTOM_DOMAIN=${CUSTOM_DOMAIN}
+      
+      # Feature Flags
+      - NEXT_PUBLIC_SHOW_DASHBOARD=${SHOW_DASHBOARD:-true}
+      - NEXT_PUBLIC_SHOW_TOOLS=${SHOW_TOOLS:-true}
+      - NEXT_PUBLIC_SHOW_SERVERS=${SHOW_SERVERS:-true}
+      - NEXT_PUBLIC_SHOW_AUTH=${SHOW_AUTH:-true}
+      - NEXT_PUBLIC_SHOW_CHAT=${SHOW_CHAT:-true}
+      
+      # Chat Configuration
+      - NEXT_PUBLIC_CHAT_ENABLED=${CHAT_ENABLED:-true}
+      - NEXT_PUBLIC_CHAT_AGENT_TYPE=${CHAT_AGENT_TYPE:-mock}
+      - NEXT_PUBLIC_CHAT_API_ENDPOINT=${CHAT_API_ENDPOINT}
+      - NEXT_PUBLIC_CHAT_API_KEY=${CHAT_API_KEY}
+      - NEXT_PUBLIC_OPENAI_API_KEY=${OPENAI_API_KEY}
+      
+      # Email Configuration (optional)
+      - EMAIL_FROM=${EMAIL_FROM}
+      - EMAIL_FROM_NAME=${EMAIL_FROM_NAME}
+      - SUPPORT_EMAIL=${SUPPORT_EMAIL}
+      
+      # Advanced Features
+      - NEXT_PUBLIC_ENABLE_ANALYTICS=${ENABLE_ANALYTICS:-false}
+      - NEXT_PUBLIC_ANALYTICS_ID=${ANALYTICS_ID}
+      
+    volumes:
+      # Mount custom branding assets
+      - ./public/branding:/app/public/branding:ro
+      # Optional: Mount custom configuration
+      - ./config:/app/config:ro
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 40s
+    
+    networks:
+      - arcade-network
+
+networks:
+  arcade-network:
+    driver: bridge
+

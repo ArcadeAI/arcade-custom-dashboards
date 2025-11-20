@@ -1,0 +1,146 @@
+# Arcade Composable Dashboard - Context for AI Assistants
+
+## Project Overview
+
+This is the Arcade Composable Dashboard - a white-labelable, production-ready tool management platform powered by Arcade's API. It's designed to be customized, rebranded, and distributed to customers.
+
+## Key Characteristics
+
+- **Technology**: Next.js 16 + TypeScript + Tailwind CSS
+- **Architecture**: Single-page dashboard with real-time analytics
+- **Deployment**: Docker-ready with one-command setup
+- **Customization**: Config-file based white-labeling
+- **Features**: Tool management, MCP servers, chat interface, analytics
+
+## Project Structure
+
+```
+arcade-composable-dashboard/
+├── app/                    # Next.js pages
+│   ├── page.tsx           # Main dashboard (analytics, tools, servers)
+│   ├── tools/page.tsx     # Tools browser with search
+│   ├── servers/page.tsx   # MCP servers list
+│   ├── chat/page.tsx      # Chat interface
+│   └── api/               # API routes (proxy to Arcade)
+├── components/            # Reusable UI components
+├── config/                # White-label configuration
+│   ├── branding.config.ts # Company name, colors, fonts
+│   └── features.config.ts # Feature flags
+├── chat/                  # Chat system with pluggable AI
+├── lib/                   # Utilities and API client
+└── Dockerfile             # Production deployment
+```
+
+## Arcade API Integration
+
+**Base URL**: `https://api.arcade.dev`
+**Authentication**: Bearer token via `ARCADE_API_KEY`
+
+### Key Endpoints:
+
+- `GET /v1/tools?limit=1` - Get tools count (returns `total_count`)
+- `GET /v1/tools?limit=50` - List tools (returns `tools` array + `total_count`)
+- Tool structure: `{ id, name, description, category, server_id, requires_auth, input_schema }`
+
+### API Client Location:
+- Server-side: `app/api/arcade.ts` (ArcadeAPIClient class)
+- Client-side: `lib/arcade-client.ts` (wrapper for browser)
+
+## White-labeling System
+
+All branding controlled via:
+1. `config/branding.config.ts` - Hard-coded defaults
+2. Environment variables - Override defaults (prefixed with `NEXT_PUBLIC_`)
+
+### Example:
+```typescript
+// config/branding.config.ts
+companyName: process.env.NEXT_PUBLIC_COMPANY_NAME || 'GameForge Studios'
+```
+
+### Current Demo Branding:
+- Company: GameForge Studios
+- Tagline: "Composable Dashboards Powered by Arcade"
+- Colors: Purple (#8b5cf6) + Orange (#f97316)
+
+## Feature Flags
+
+Control visibility via `config/features.config.ts`:
+```typescript
+navigation: {
+  showDashboard: true,
+  showTools: true,
+  showServers: true,
+  showChat: true,
+}
+```
+
+## Chat Interface
+
+Located in `/chat` directory:
+- Three modes: page, widget, sidebar
+- Pluggable agent system (interface in `chat/types.ts`)
+- Examples for OpenAI, Anthropic, custom APIs in `chat/agent-plugin.ts`
+
+## Styling
+
+- **Theme**: Dark mode with gradient accents
+- **Colors**: CSS variables for dynamic theming
+- **Gradients**: Purple-to-orange (Arcade brand)
+- **Components**: Compact, elegant, minimalistic
+
+## Docker Deployment
+
+```bash
+cp env.example .env
+# Add ARCADE_API_KEY to .env
+docker-compose up -d
+```
+
+Single Dockerfile with multi-stage build, health checks, and production optimization.
+
+## Common Customization Tasks
+
+See `prompts/customization-prompts.md` for pre-written prompts for:
+- Changing branding
+- Adding new pages
+- Modifying colors
+- Integrating new services
+- Adding custom analytics
+
+## Important Files
+
+- `app/page.tsx` - Main dashboard UI
+- `config/branding.config.ts` - White-label settings
+- `app/api/tools/route.ts` - Tools API proxy
+- `chat/agent-plugin.ts` - AI integration point
+- `Dockerfile` + `docker-compose.yml` - Deployment
+
+## Development Commands
+
+```bash
+npm install          # Install dependencies
+npm run dev          # Local development
+npm run build        # Production build
+docker-compose up -d # Docker deployment
+```
+
+## Environment Variables
+
+Required:
+- `ARCADE_API_KEY` - Your Arcade API key
+
+Optional (white-labeling):
+- `NEXT_PUBLIC_COMPANY_NAME`
+- `NEXT_PUBLIC_PRIMARY_COLOR`
+- `NEXT_PUBLIC_SECONDARY_COLOR`
+- See `env.example` for full list
+
+## Notes for AI Assistants
+
+- This is production code, not a prototype
+- All TODO comments mark integration points for real APIs
+- Mock data is temporary until API endpoints are documented
+- Modular design allows cherry-picking components
+- Emphasis on elegant, compact UI design
+
