@@ -5,6 +5,8 @@
 [![Deploy with Docker](https://img.shields.io/badge/Deploy-Docker-2496ED?logo=docker)](#quick-start)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
+![Arcade Custom Dashboards](./public/images/home.png)
+
 ---
 
 ## What Is This?
@@ -105,6 +107,19 @@ arcade-custom-dashboards/
 Click **Developer Tools** in the app to get an AI prompt with full context. Copy, paste into Claude/ChatGPT, customize any dashboard.
 
 Or see `prompts/master-prompt.md` for the template.
+
+---
+
+## Examples
+
+### GameForge Studio - Gaming Dashboard
+![GameForge Studio](./public/images/example1.png)
+
+### FinTech Pro - Financial Services
+![FinTech Pro](./public/images/example2.png)
+
+### HealthCare Hub - Medical Dashboard
+![HealthCare Hub](./public/images/example3.png)
 
 ---
 
